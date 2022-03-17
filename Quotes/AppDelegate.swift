@@ -7,17 +7,34 @@
 
 import UIKit
 import CoreData
+import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+ var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+          if error != nil || user == nil {
+           
+          } else {
+            //  let storyboard = UIStoryboard(name: "Main", bundle: nil)
+              //let  collectionView =  storyboard.instantiateViewController(withIdentifier: "CollectionViewController") as! CollectionViewController
+              self.window?.rootViewController = CollectionViewController()
+              print("UserSigned in")
+          }
+        }
+          return true
+        
     }
-
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let handled = GIDSignIn.sharedInstance.handle(url)
+        if handled{
+            return true
+        }
+        return false
+    }
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
