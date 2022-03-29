@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           } else {
             //  let storyboard = UIStoryboard(name: "Main", bundle: nil)
               //let  collectionView =  storyboard.instantiateViewController(withIdentifier: "CollectionViewController") as! CollectionViewController
-              self.window?.rootViewController = CollectionViewController()
+              self.window?.rootViewController = CategoryViewController()
               print("UserSigned in")
           }
         }

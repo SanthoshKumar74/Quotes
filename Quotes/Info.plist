@@ -36,5 +36,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Please Provide access to photos for adding Quotes from images.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Please Provide access to photos for adding Quotes from images.</string>
 </dict>
 </plist>

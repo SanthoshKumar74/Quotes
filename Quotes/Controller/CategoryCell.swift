@@ -20,8 +20,13 @@ class CategoryCell: UICollectionViewCell {
     }
     
     func configure(category:Category,image:UIImage){
-        categoryLabel.text = category.name
-        categoryImage.image = image
+        DispatchQueue.main.async {
+            if let name = category.name{
+                self.categoryLabel.text = name
+                self.categoryImage.image = image
+            }
+        }
+        
     }
     
 }
