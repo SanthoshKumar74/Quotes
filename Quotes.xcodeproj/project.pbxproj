@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2F11CF50B97100AA2315C0D5 /* Pods_Quotes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02461A4399B11D9835BFBA8F /* Pods_Quotes.framework */; };
+		7F096B8627F3567D004FE4D5 /* NotionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F096B8527F3567D004FE4D5 /* NotionAPI.swift */; };
 		7F9656C127D9AEE700D67B28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656C027D9AEE700D67B28 /* AppDelegate.swift */; };
 		7F9656C327D9AEE700D67B28 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656C227D9AEE700D67B28 /* SceneDelegate.swift */; };
 		7F9656C527D9AEE700D67B28 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656C427D9AEE700D67B28 /* SignInViewController.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		02461A4399B11D9835BFBA8F /* Pods_Quotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F096B8527F3567D004FE4D5 /* NotionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotionAPI.swift; sourceTree = "<group>"; };
 		7F9656BD27D9AEE700D67B28 /* Quotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9656C027D9AEE700D67B28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F9656C227D9AEE700D67B28 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			children = (
 				7F9656DF27E2D34900D67B28 /* QuotesData.swift */,
 				7F9656E927E47F3C00D67B28 /* QuotesViewDataSource.swift */,
+				7F096B8527F3567D004FE4D5 /* NotionAPI.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F096B8627F3567D004FE4D5 /* NotionAPI.swift in Sources */,
 				7F9656DC27E0C16600D67B28 /* CategoryViewController.swift in Sources */,
 				7F9656CB27D9AEE700D67B28 /* Quotes.xcdatamodeld in Sources */,
 				7F9656EC27E4907300D67B28 /* QuoteCell.swift in Sources */,
