@@ -21,6 +21,7 @@ class QuotesViewDataSource:NSObject
                 let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", category.name!)
                 fetchrecquest.predicate = predicate
                 try Quotes = context.fetch(fetchrecquest) as! [Quotes]
+                print(Quotes.count)
             }catch{
                 print("error Loading Data\(error)")
             }

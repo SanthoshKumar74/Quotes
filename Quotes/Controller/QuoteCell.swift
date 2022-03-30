@@ -18,6 +18,7 @@ class QuoteCell: UITableViewCell {
     
     func configure(quote:Quotes)
     {
+        print(quote.quote)
         quoteView.text = quote.quote
         
     }

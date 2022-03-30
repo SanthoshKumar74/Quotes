@@ -27,6 +27,7 @@ class CategoryViewController:UICollectionViewController
         super.viewDidLoad()
        navigationItem.hidesBackButton = true
         self.retriveData()
+        print(categories.count)
         collectionView.reloadData()
         
     }

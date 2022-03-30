@@ -15,6 +15,7 @@ class QuotesViewController:UITableViewController
     
     override func viewDidLoad() {
         tableView.delegate = self
+        tableView.dataSource = datasource
         datasource.retriveData(category: selectedCategory!)
     }
    override func prepare(for segue: UIStoryboardSegue, sender: Any?)

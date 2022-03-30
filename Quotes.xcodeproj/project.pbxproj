@@ -30,6 +30,7 @@
 /* Begin PBXFileReference section */
 		02461A4399B11D9835BFBA8F /* Pods_Quotes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quotes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F096B8527F3567D004FE4D5 /* NotionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotionAPI.swift; sourceTree = "<group>"; };
+		7F096B8727F3E516004FE4D5 /* NOtion api.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = "NOtion api.playground"; path = "../NOtion api.playground"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		7F9656BD27D9AEE700D67B28 /* Quotes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quotes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9656C027D9AEE700D67B28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F9656C227D9AEE700D67B28 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,6 +76,7 @@
 		7F9656B427D9AEE600D67B28 = {
 			isa = PBXGroup;
 			children = (
+				7F096B8727F3E516004FE4D5 /* NOtion api.playground */,
 				7F9656BF27D9AEE700D67B28 /* Quotes */,
 				7F9656BE27D9AEE700D67B28 /* Products */,
 				8E282B701BA684C68C6C2490 /* Pods */,
