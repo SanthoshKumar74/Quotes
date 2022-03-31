@@ -12,7 +12,7 @@ import CoreData
 
 class CategoryViewController:UICollectionViewController
 {
-    
+    let notion = NotionAPI()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var textField = UITextField()
     private var categories:[Category] = []
@@ -22,14 +22,19 @@ class CategoryViewController:UICollectionViewController
         GIDSignIn.sharedInstance.signOut()
         navigationController?.popToRootViewController(animated: true)
     }
+    
+    let refreshControl = UIRefreshControl()
     override func viewDidLoad()
     {
         super.viewDidLoad()
        navigationItem.hidesBackButton = true
-        self.retriveData()
-        print(categories.count)
+        //self.categories = notion.retriveData()
+        refreshControl.tintColor = .blue
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+            collectionView.addSubview(refreshControl)
+            collectionView.alwaysBounceVertical = true
         collectionView.reloadData()
-        
+        //print(categories.count)
     }
 }
 
@@ -56,6 +61,7 @@ extension CategoryViewController{
                 alertTextField.placeholder = "Create a New Category"
                 self.textField = alertTextField
             }
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             present(alert, animated: true, completion: nil)
         } else{
             performSegue(withIdentifier: "goToQuotes", sender: self)
@@ -127,14 +133,28 @@ extension CategoryViewController
     
     func retriveData()
     {
+        
         do{
-            try categories = context.fetch(Category.fetchRequest()) as [Category]
-        }catch{
-            print("error Loading Data\(error)")
-        }
+    try categories = context.fetch(Category.fetchRequest()) as [Category]
+}catch{
+    print("error Loading Data\(error)")
+}
+        print(categories.count)
         collectionView.reloadData()
     }
-        
     
-    
+}
+
+//MARK: Refresh Control
+extension CategoryViewController
+{
+    @objc func refresh()
+    {
+            self.categories =  notion.retriveData()
+           // retriveData()
+            self.collectionView.reloadData()
+            self.refreshControl.endRefreshing()
+
+                
+    }
 }

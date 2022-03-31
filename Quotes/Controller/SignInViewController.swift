@@ -10,10 +10,9 @@ import GoogleSignIn
 import SwiftyJSON
 
 class SignInViewController: UIViewController{
-    let notion = NotionAPI()
     let signInConfig = GIDConfiguration.init(clientID: "1080783319032-v0lsnm8m7jptp9n7pi2qodsmpeg7e6rj.apps.googleusercontent.com",serverClientID: "1080783319032-odt03u9s2jtomohb5acv67vsljgp8kbu.apps.googleusercontent.com")
     
-
+let notion = NotionAPI()
     
     @IBAction func signInButton(_ sender: Any) {
     
@@ -22,8 +21,10 @@ class SignInViewController: UIViewController{
           //  guard error == nil
             // else { return }
              //guard let user = user else {return}
+       
              self.performSegue(withIdentifier: "goToQuotes", sender: sender)
-         notion.retriveData()
+     
+           
       
 //          //}
     
@@ -32,6 +33,7 @@ class SignInViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //notion.retriveData()
     }
 
 

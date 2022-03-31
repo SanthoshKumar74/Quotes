@@ -9,7 +9,10 @@ import UIKit
 
 class QuoteCell: UITableViewCell {
     
+
     @IBOutlet var quoteView: UITextView!
+    @IBOutlet var authorLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -18,8 +21,8 @@ class QuoteCell: UITableViewCell {
     
     func configure(quote:Quotes)
     {
-        print(quote.quote)
         quoteView.text = quote.quote
+        authorLabel.text = quote.authorCategory?.name
         
     }
 }

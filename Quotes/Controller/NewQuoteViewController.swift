@@ -14,23 +14,25 @@ class NewQuoteViewController:UIViewController
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var categories:[Category] = []
+    let notion = NotionAPI()
     var selectedCategory: Category?
-    static var authorText  : String = ""
+    static var authorString = ""
+
     @IBOutlet var quoteImage: UIImageView!
-    @IBOutlet var quoteText: UITextView!
-    @IBOutlet var authorText: UITextField!
+    @IBOutlet var quoteText: UITextView?
     @IBOutlet var categoryPicker: UIPickerView!
-    
+    @IBOutlet var authorText: UITextField!
     @IBAction func saveQuote(_ sender: UIButton) {
-        saveNewQuote(quote: quoteText.text!, author: authorText.text!, category: categories[categoryPicker.selectedRow(inComponent: 0)].name!)
+        saveNewQuote(quote: quoteText!.text!, author: authorText.text!, category: categories[categoryPicker.selectedRow(inComponent: 0)].name!)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
-        quoteText.clipsToBounds = true
+        quoteText!.clipsToBounds = true
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Category")
         categories = try! context.fetch(fetchRequest) as! [Category]
+        
     }
     @IBAction func cameraClicked(_ sender: UIBarButtonItem) {
         let imagePickerVC = UIImagePickerController()
@@ -49,6 +51,7 @@ class NewQuoteViewController:UIViewController
             imagePickerVC.allowsEditing = true
             self.present(imagePickerVC, animated: true, completion: nil)
         }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true, completion: nil)
     }
 }
@@ -82,7 +85,7 @@ extension NewQuoteViewController
             let text =  observations.compactMap({$0.topCandidates(1).first?.string}).joined(separator: " ")
             DispatchQueue.main.async {
                 print(text)
-                self.quoteText.text = text
+                self.quoteText!.text = text
             }
     
             
@@ -125,37 +128,51 @@ extension NewQuoteViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-       print(categories.count)
        return categories.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        print(row)
-        print(categories[row].name)
         return categories[row].name
     }
 }
-                     
-//MARK: Author TextField
-extension NewQuoteViewController:UITextFieldDelegate
-{
 
+//MARK: AuthorSelect
+extension NewQuoteViewController
+{
+    func configure(quote:Quotes)
+    {
+        DispatchQueue.main.async {
+            self.authorText.text = quote.authorCategory?.name
+            self.quoteText!.text = quote.quote
+        }
+          
 }
+    func configureAuthortext(author:String)
+    {
+        DispatchQueue.main.async {
+            self.authorText.text = author
+        }
+    }
+}
+                     
 
 //MARK: Adding New Quote
 extension NewQuoteViewController
 {
     func saveNewQuote(quote:String,author:String,category:String)
     {
-       let newQuote = Quotes(context: context)
-        let Author = Author(context: context)
-        selectedCategory?.name = category
-        Author.name = author
-        newQuote.quote = quote
-        newQuote.parentCategory = selectedCategory
-        newQuote.authorCategory = Author
-        try! context.save()
-        dismiss(animated: true, completion: nil)
+//       let newQuote = Quotes(context: context)
+//        let Author = Author(context: context)
+//        selectedCategory?.name = category
+//        Author.name = author
+//        newQuote.quote = quote
+//        newQuote.parentCategory = selectedCategory
+//        newQuote.authorCategory = Author
+//        try! context.save()
+        //notion.addPage(quote: quote, author: author, category: category)
+        notion.updateData(author: author, Quote: quote, Category: category)
+        navigationController?.popViewController(animated: true)
+        
         
         
     }

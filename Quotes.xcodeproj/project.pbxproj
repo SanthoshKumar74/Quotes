@@ -18,10 +18,8 @@
 		7F9656D027D9AEE800D67B28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F9656CE27D9AEE800D67B28 /* LaunchScreen.storyboard */; };
 		7F9656DA27E0523300D67B28 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F9656D927E0523300D67B28 /* credentials.plist */; };
 		7F9656DC27E0C16600D67B28 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656DB27E0C16600D67B28 /* CategoryViewController.swift */; };
-		7F9656E027E2D34900D67B28 /* QuotesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656DF27E2D34900D67B28 /* QuotesData.swift */; };
 		7F9656E427E2DA9D00D67B28 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656E327E2DA9D00D67B28 /* CategoryCell.swift */; };
 		7F9656E827E3E4EE00D67B28 /* QuotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656E727E3E4EE00D67B28 /* QuotesViewController.swift */; };
-		7F9656EA27E47F3C00D67B28 /* QuotesViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656E927E47F3C00D67B28 /* QuotesViewDataSource.swift */; };
 		7F9656EC27E4907300D67B28 /* QuoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656EB27E4907300D67B28 /* QuoteCell.swift */; };
 		7F9656F127E8905B00D67B28 /* NewQuoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656F027E8905B00D67B28 /* NewQuoteViewController.swift */; };
 		7F9656F327F2D24500D67B28 /* AuthorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9656F227F2D24500D67B28 /* AuthorViewController.swift */; };
@@ -42,10 +40,8 @@
 		7F9656D127D9AEE800D67B28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F9656D927E0523300D67B28 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		7F9656DB27E0C16600D67B28 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
-		7F9656DF27E2D34900D67B28 /* QuotesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesData.swift; sourceTree = "<group>"; };
 		7F9656E327E2DA9D00D67B28 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		7F9656E727E3E4EE00D67B28 /* QuotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesViewController.swift; sourceTree = "<group>"; };
-		7F9656E927E47F3C00D67B28 /* QuotesViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotesViewDataSource.swift; sourceTree = "<group>"; };
 		7F9656EB27E4907300D67B28 /* QuoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteCell.swift; sourceTree = "<group>"; };
 		7F9656F027E8905B00D67B28 /* NewQuoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewQuoteViewController.swift; sourceTree = "<group>"; };
 		7F9656F227F2D24500D67B28 /* AuthorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorViewController.swift; sourceTree = "<group>"; };
@@ -120,8 +116,6 @@
 		7F9656EE27E8507A00D67B28 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7F9656DF27E2D34900D67B28 /* QuotesData.swift */,
-				7F9656E927E47F3C00D67B28 /* QuotesViewDataSource.swift */,
 				7F096B8527F3567D004FE4D5 /* NotionAPI.swift */,
 			);
 			path = Model;
@@ -274,10 +268,8 @@
 				7F9656C527D9AEE700D67B28 /* SignInViewController.swift in Sources */,
 				7F9656E427E2DA9D00D67B28 /* CategoryCell.swift in Sources */,
 				7F9656C127D9AEE700D67B28 /* AppDelegate.swift in Sources */,
-				7F9656EA27E47F3C00D67B28 /* QuotesViewDataSource.swift in Sources */,
 				7F9656C327D9AEE700D67B28 /* SceneDelegate.swift in Sources */,
 				7F9656E827E3E4EE00D67B28 /* QuotesViewController.swift in Sources */,
-				7F9656E027E2D34900D67B28 /* QuotesData.swift in Sources */,
 				7F9656F127E8905B00D67B28 /* NewQuoteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
