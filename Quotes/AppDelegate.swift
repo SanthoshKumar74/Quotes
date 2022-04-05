@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
               print("UserSigned in")
           }
         }
+       print( NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
           return true
         
     }

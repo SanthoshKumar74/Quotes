@@ -264,7 +264,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ndX-gm-SO8">
-                                <rect key="frame" x="70" y="163" width="294" height="34"/>
+                                <rect key="frame" x="70" y="163" width="344" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -294,14 +294,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="elJ-xh-vaP">
-                                <rect key="frame" x="364" y="165" width="50" height="31"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="arrow.right" catalog="system"/>
-                                <connections>
-                                    <segue destination="Q1U-0i-sKR" kind="presentation" id="qG3-1E-1oQ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iwh-vZ-ZYG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -314,23 +306,19 @@
                             <constraint firstItem="vdI-1w-gIi" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="F1z-Nq-3Lm"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="80" id="K3F-Ce-Y9o"/>
                             <constraint firstItem="ige-pj-rcj" firstAttribute="top" secondItem="iwh-vZ-ZYG" secondAttribute="top" id="LXI-QZ-rkp"/>
-                            <constraint firstItem="elJ-xh-vaP" firstAttribute="leading" secondItem="ndX-gm-SO8" secondAttribute="trailing" id="N4N-8Q-7Di"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" constant="100" id="Nz0-Gm-7dR"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="top" secondItem="iwh-vZ-ZYG" secondAttribute="top" constant="10" id="SAt-Uv-axH"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="vdI-1w-gIi" secondAttribute="trailing" id="SPT-p0-Cye"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="vCU-XS-NR1" secondAttribute="bottom" constant="20" id="Szt-bm-r2p"/>
                             <constraint firstItem="ige-pj-rcj" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" constant="10" id="UNF-si-kBc"/>
-                            <constraint firstItem="elJ-xh-vaP" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="17" id="WzD-nI-KT8"/>
                             <constraint firstItem="vdI-1w-gIi" firstAttribute="top" secondItem="EW5-s0-gaR" secondAttribute="bottom" constant="30" id="YXG-MZ-a28"/>
                             <constraint firstItem="vCU-XS-NR1" firstAttribute="top" secondItem="ige-pj-rcj" secondAttribute="bottom" id="Yqb-S7-OtU"/>
-                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="ndX-gm-SO8" secondAttribute="trailing" constant="50" id="ciP-lg-plQ"/>
+                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="ndX-gm-SO8" secondAttribute="trailing" id="ciP-lg-plQ"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="bottom" secondItem="vdI-1w-gIi" secondAttribute="bottom" constant="20" id="e1V-qL-kLN"/>
                             <constraint firstItem="vCU-XS-NR1" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="5" id="f1U-Ab-EOz"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="bottom" secondItem="6J3-Qf-DOI" secondAttribute="bottom" constant="150" id="icS-0i-qyH"/>
-                            <constraint firstItem="elJ-xh-vaP" firstAttribute="trailing" secondItem="iwh-vZ-ZYG" secondAttribute="trailing" id="jLZ-Vv-qmp"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="zFe-dK-Ap7" secondAttribute="trailing" constant="5" id="jUw-6e-0i0"/>
                             <constraint firstItem="EW5-s0-gaR" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="o3A-cw-PzQ"/>
-                            <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="elJ-xh-vaP" secondAttribute="bottom" constant="32" id="oe0-pu-yzj"/>
                             <constraint firstItem="zFe-dK-Ap7" firstAttribute="top" secondItem="6J3-Qf-DOI" secondAttribute="bottom" id="ovK-mZ-hdP"/>
                             <constraint firstItem="zFe-dK-Ap7" firstAttribute="leading" secondItem="EW5-s0-gaR" secondAttribute="trailing" constant="5" id="pOC-Pc-K4j"/>
                             <constraint firstItem="vCU-XS-NR1" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" constant="10" id="tT8-T7-9ay"/>
@@ -362,7 +350,7 @@
             <objects>
                 <tableViewController id="Q1U-0i-sKR" customClass="AuthorViewController" customModule="Quotes" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="dNa-tR-1x2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
@@ -410,7 +398,6 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Quotes" width="125" height="125"/>
-        <image name="arrow.right" catalog="system" width="128" height="98"/>
         <image name="icons8-google-144" width="36" height="36"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">

@@ -19,6 +19,7 @@ class QuotesViewController:UITableViewController
         tableView.delegate = self
         tableView.dataSource = self
         self.retriveData(category: selectedCategory!)
+        tableView.reloadData()
     }
     
     let context =  (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -32,10 +33,11 @@ class QuotesViewController:UITableViewController
                 let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", category.name!)
                 fetchrecquest.predicate = predicate
                 try Quotes = context.fetch(fetchrecquest) as! [Quotes]
-               // print(Quotes.count)
+               print(Quotes.count)
             }catch{
                 print("error Loading Data\(error)")
             }
+        tableView.reloadData()
         
     }
 

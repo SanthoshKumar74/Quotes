@@ -151,6 +151,7 @@ extension CategoryViewController
     @objc func refresh()
     {
             self.categories =  notion.retriveData()
+            print(self.categories.count)
            // retriveData()
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()

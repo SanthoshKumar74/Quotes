@@ -12,6 +12,7 @@ import CoreData
 class NotionAPI
 {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     var Quote : [Quotes] = []
     var categories : [Category] = []
     var authors : [Author] = []
@@ -19,6 +20,8 @@ class NotionAPI
     
      func retriveData()-> [Category]
     {
+       
+        
         let group = DispatchGroup()
         group.enter()
         DispatchQueue.global().sync{
@@ -66,6 +69,7 @@ class NotionAPI
             
                let json = try! JSON(data: safeData)
                let results = json["results"]
+               //print(results)
                for result in results
                {
                    var oldQuote = Quotes()
@@ -138,7 +142,9 @@ class NotionAPI
     }catch{
         print("error Loading Data\(error)")
     }
-            print(categories.count)
+            for category in categories {
+                print(category.name)
+            }
            
            
         }

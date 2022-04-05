@@ -150,7 +150,7 @@ extension NewQuoteViewController
     func configureAuthortext(author:String)
     {
         DispatchQueue.main.async {
-            self.authorText.text = author
+            self.authorText!.text = author
         }
     }
 }
