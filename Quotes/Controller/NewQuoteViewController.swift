@@ -161,14 +161,14 @@ extension NewQuoteViewController
 {
     func saveNewQuote(quote:String,author:String,category:String)
     {
-//       let newQuote = Quotes(context: context)
-//        let Author = Author(context: context)
-//        selectedCategory?.name = category
-//        Author.name = author
-//        newQuote.quote = quote
-//        newQuote.parentCategory = selectedCategory
-//        newQuote.authorCategory = Author
-//        try! context.save()
+       let newQuote = Quotes(context: context)
+        let Author = Author(context: context)
+        selectedCategory?.name = category
+        Author.name = author
+        newQuote.quote = quote
+        newQuote.parentCategory = selectedCategory
+        newQuote.authorCategory = Author
+        try! context.save()
         //notion.addPage(quote: quote, author: author, category: category)
         notion.updateData(author: author, Quote: quote, Category: category)
         navigationController?.popViewController(animated: true)

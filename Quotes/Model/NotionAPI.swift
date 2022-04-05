@@ -18,13 +18,13 @@ class NotionAPI
     var authors : [Author] = []
    
     
-     func retriveData()-> [Category]
+     func retriveData()
     {
-       
+       deleteCoreData()
         
-        let group = DispatchGroup()
-        group.enter()
-        DispatchQueue.global().sync{
+   
+
+       
         let headers = [
           "Accept": "application/json",
           "Notion-Version": "2022-02-22",
@@ -32,19 +32,6 @@ class NotionAPI
           "Authorization": "Bearer secret_qRBPjunNDhcYCkP5WhZ9HcZbZOsTf2lykgZeQewxdyS"
         ]
             
-            do{
-                try Quote = context.fetch(Quotes.fetchRequest()) as [Quotes]
-                try categories = context.fetch(Category.fetchRequest()) as [Category]
-                try authors = context.fetch(Author.fetchRequest()) as [Author]
-                
-            }catch
-            {
-                
-            }
-            
-            let quotesName = Quote.compactMap({$0.quote})
-            let authorName = authors.compactMap({$0.name})
-            let categoryName = categories.compactMap({$0.name})
 //        let parameters = [
 //                "filter": [
 //                    "property": "Category",
@@ -72,88 +59,31 @@ class NotionAPI
                //print(results)
                for result in results
                {
-                   var oldQuote = Quotes()
-                   var newQuote = Quotes(context:context)
-                   
-                   if quotesName.contains(result.1["properties"]["Quote"]["title"][0]["text"]["content"].string!)
-                   {
-                   for quote in Quote {
-                       if quote.quote == result.1["properties"]["Quote"]["title"][0]["text"]["content"].string
-                       {
-                           //oldQuote.quote = result.1["properties"]["Quote"]["title"][0]["text"]["content"].string
-                           
-                       }
-                   }
-                   }else{
-                    
+                   let newQuote = Quotes(context:context)
+                   let newAuthor = Author(context: context)
+                   let newCategory = Category(context: context)
                            newQuote.quote = result.1["properties"]["Quote"]["title"][0]["text"]["content"].string
-                       
-                       
-                   }
-                   
-                   if authorName.contains( result.1["properties"]["Author"]["multi_select"][0]["name"].string!)
-                   {
-                   for author in authors {
-                       if author.name ==  result.1["properties"]["Author"]["multi_select"][0]["name"].string
-                       {
-                           //oldAuthor.name =  result.1["properties"]["Author"]["multi_select"][0]["name"].string
-                          // oldQuote.authorCategory = oldAuthor
-                           
-                       }
-                   }
-                   }
-                   else
-                   {
-                               let newAuthor = Author(context: context)
                            newAuthor.name =  result.1["properties"]["Author"]["multi_select"][0]["name"].string
                            newQuote.authorCategory = newAuthor
-                       
-                       
-                   }
-                   
-                   if categoryName.contains(result.1["properties"]["Category"]["multi_select"][0]["name"].string!)
-                   {
-                   for category in categories {
-                       if category.name == result.1["properties"]["Category"]["multi_select"][0]["name"].string
-                       {
-                          // oldCatgory.name = result.1["properties"]["Category"]["multi_select"][0]["name"].string
-                          // oldQuote.parentCategory = oldCatgory
-                           
-                       }
-                   }
-                   }
-                   else
-                   {
-                     
-                               let newCategory = Category(context: context)
                            newCategory.name = result.1["properties"]["Category"]["multi_select"][0]["name"].string
                            newQuote.parentCategory = newCategory
-                       
-                       
                    }
                   
                    
                    }
                    //self.Quote.append(quote)
-                   try! self.context.save()
+           
            }
-            do{
-        try categories = context.fetch(Category.fetchRequest()) as [Category]
-    }catch{
-        print("error Loading Data\(error)")
-    }
-            for category in categories {
-                print(category.name)
-            }
-           
-           
-        }
-      
+        try! self.context.save()
         task.resume()
-            group.leave()}
+        print("saved")
+               
         
-        group.wait()
-        return categories
+      var testQuote: [Quotes] = []
+        try! testQuote = context.fetch(Quotes.fetchRequest())
+        print(testQuote.count)
+//        return categories
+        
     }
     
     func updateData(author: String, Quote: String, Category: String ) {
@@ -203,11 +133,13 @@ class NotionAPI
                }
         
     }
+           
             
             
         
 }
         task.resume()
+        
     }
     
     
@@ -295,6 +227,47 @@ class NotionAPI
     }
         
     }
+
+
+extension NotionAPI
+{
+    func deleteCoreData()
+    {
+        // Get a reference to a NSPersistentStoreCoordinator
+        let context =
+        (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+        let authorRecquest : NSFetchRequest<NSFetchRequestResult>
+        authorRecquest = NSFetchRequest(entityName: "Author")
+        let categoryRecquest : NSFetchRequest<NSFetchRequestResult>
+        categoryRecquest = NSFetchRequest(entityName: "Category")
+        let quoteRecquest : NSFetchRequest<NSFetchRequestResult>
+        quoteRecquest = NSFetchRequest(entityName: "Quotes")
+        
+        let deleteauthorRequest = NSBatchDeleteRequest(
+            fetchRequest: authorRecquest
+        )
+        
+        let deleteCategoryRequest = NSBatchDeleteRequest(
+            fetchRequest: categoryRecquest
+        )
+        
+        let deletequotesRequest = NSBatchDeleteRequest(
+            fetchRequest: quoteRecquest
+        )
+        do{
+         try context.execute(deleteauthorRequest)
+         try context.execute(deletequotesRequest)
+         try context.execute(deleteCategoryRequest)
+        }
+        catch{
+            
+        }
+
+
+}
+}
+
 
 extension Array where Element: Hashable {
     func removingDuplicates() -> [Element] {

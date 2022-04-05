@@ -16,6 +16,7 @@ class CategoryViewController:UICollectionViewController
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var textField = UITextField()
     private var categories:[Category] = []
+    private var quotes:[Quotes] = []
     private var sectionInsets = UIEdgeInsets(top: 20, left: 15 ,bottom: 20, right: 15)
     private var itemsPerRow:CGFloat = 3
     @IBAction func signOutPressed(_ sender: UIBarButtonItem) {
@@ -31,10 +32,10 @@ class CategoryViewController:UICollectionViewController
         //self.categories = notion.retriveData()
         refreshControl.tintColor = .blue
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-            collectionView.addSubview(refreshControl)
-            collectionView.alwaysBounceVertical = true
+        collectionView.addSubview(refreshControl)
+        collectionView.alwaysBounceVertical = true
+        //retriveData()
         collectionView.reloadData()
-        //print(categories.count)
     }
 }
 
@@ -135,11 +136,13 @@ extension CategoryViewController
     {
         
         do{
-    try categories = context.fetch(Category.fetchRequest()) as [Category]
-}catch{
+    try  categories = context.fetch(Category.fetchRequest()) as [Category]
+}
+        catch
+        {
     print("error Loading Data\(error)")
 }
-        print(categories.count)
+        //print(categories.count)
         collectionView.reloadData()
     }
     
@@ -150,9 +153,8 @@ extension CategoryViewController
 {
     @objc func refresh()
     {
-            self.categories =  notion.retriveData()
-            print(self.categories.count)
-           // retriveData()
+            notion.retriveData()
+            retriveData()
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()
 

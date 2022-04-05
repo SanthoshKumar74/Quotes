@@ -33,7 +33,7 @@ let notion = NotionAPI()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //notion.retriveData()
+      //  notion.retriveData()
     }
 
 

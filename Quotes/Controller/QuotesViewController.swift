@@ -23,17 +23,18 @@ class QuotesViewController:UITableViewController
     }
     
     let context =  (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    private var Quotes:[Quotes] = []
+    private var quotesToShow:[Quotes] = []
     //private var selectedCategory:Category
     func retriveData(category:Category)
     {
         
             do{
-                let fetchrecquest = NSFetchRequest<NSManagedObject>(entityName: "Quotes")
-                let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", category.name!)
+                let fetchrecquest = NSFetchRequest<Quotes>(entityName: "Quotes")
+               let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", category.name!)
                 fetchrecquest.predicate = predicate
-                try Quotes = context.fetch(fetchrecquest) as! [Quotes]
-               print(Quotes.count)
+                context.reset()
+                try quotesToShow = context.fetch(fetchrecquest)
+               print(quotesToShow.count)
             }catch{
                 print("error Loading Data\(error)")
             }
@@ -45,7 +46,7 @@ class QuotesViewController:UITableViewController
      {
          if segue.identifier == "editQuote"{
              let destinationVC = segue.destination as! NewQuoteViewController
-             destinationVC.configure(quote:Quotes[tableView.indexPathForSelectedRow!.row])
+             destinationVC.configure(quote:quotesToShow[tableView.indexPathForSelectedRow!.row])
          }
          let destinationVC = segue.destination as! NewQuoteViewController
          destinationVC.selectedCategory = selectedCategory!
@@ -60,13 +61,13 @@ class QuotesViewController:UITableViewController
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.Quotes.count
+        self.quotesToShow.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "quoteCell") as! QuoteCell
         
-        cell.configure(quote:Quotes[indexPath.row])
+        cell.configure(quote:quotesToShow[indexPath.row])
      
         return cell
     }
