@@ -22,7 +22,23 @@ class NewQuoteViewController:UIViewController
     @IBOutlet var quoteText: UITextView?
     @IBOutlet var categoryPicker: UIPickerView!
     @IBOutlet var authorText: UITextField!
+    @IBAction func deleteButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete Author", message: nil, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Delete only author", style: .default, handler: { _ in
+            self.authorText.text! = " "
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
+            self.notion.deleteAuthor(author: self.authorText.text!)
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+        
+    }
     @IBAction func saveQuote(_ sender: UIButton) {
+        print("author \(authorText.text!)")
         saveNewQuote(quote: quoteText!.text!, author: authorText.text!, category: categories[categoryPicker.selectedRow(inComponent: 0)].name!)
     }
     override func viewDidLoad() {
@@ -32,6 +48,10 @@ class NewQuoteViewController:UIViewController
         quoteText!.clipsToBounds = true
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Category")
         categories = try! context.fetch(fetchRequest) as! [Category]
+        let index = indexOf(selectedCategory: selectedCategory!)
+        categoryPicker.selectRow( index , inComponent: 0, animated: true)
+        let tap = UITapGestureRecognizer(target: self, action:#selector(cancelEdititing))
+        self.view.addGestureRecognizer(tap)
         
     }
     @IBAction func cameraClicked(_ sender: UIBarButtonItem) {
@@ -73,6 +93,7 @@ extension NewQuoteViewController
             var height:[CGFloat] = []
             for observation in observations {
                 print(observation.boundingBox.width)
+                print(observation.topCandidates(5))
                 height.append(observation.boundingBox.width)
             }
             minHeight = height.min()!
@@ -161,15 +182,7 @@ extension NewQuoteViewController
 {
     func saveNewQuote(quote:String,author:String,category:String)
     {
-       let newQuote = Quotes(context: context)
-        let Author = Author(context: context)
-        selectedCategory?.name = category
-        Author.name = author
-        newQuote.quote = quote
-        newQuote.parentCategory = selectedCategory
-        newQuote.authorCategory = Author
-        try! context.save()
-        //notion.addPage(quote: quote, author: author, category: category)
+               //notion.addPage(quote: quote, author: author, category: category)
         notion.updateData(author: author, Quote: quote, Category: category)
         navigationController?.popViewController(animated: true)
         
@@ -179,3 +192,27 @@ extension NewQuoteViewController
     
 }
 
+//MARK: Finding the index of selected Category
+extension NewQuoteViewController
+{
+    func indexOf(selectedCategory: Category)-> Int
+    { var index = 0
+        for category in self.categories
+        {
+            if category.name == selectedCategory.name{
+                return index
+            }
+            index += 1
+        }
+        return index
+    }
+}
+
+
+//MARK: Tap Gesture
+extension NewQuoteViewController
+{
+    @objc func cancelEdititing(){
+        self.view.endEditing(true)
+    }
+}

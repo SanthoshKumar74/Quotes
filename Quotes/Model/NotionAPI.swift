@@ -21,10 +21,6 @@ class NotionAPI
      func retriveData()
     {
        deleteCoreData()
-        
-   
-
-       
         let headers = [
           "Accept": "application/json",
           "Notion-Version": "2022-02-22",
@@ -56,7 +52,8 @@ class NotionAPI
             
                let json = try! JSON(data: safeData)
                let results = json["results"]
-               //print(results)
+               print("NotionAPI results count")
+               print(results.count)
                for result in results
                {
                    let newQuote = Quotes(context:context)
@@ -72,16 +69,11 @@ class NotionAPI
                    
                    }
                    //self.Quote.append(quote)
-           
+         
            }
-        try! self.context.save()
         task.resume()
-        print("saved")
-               
-        
-      var testQuote: [Quotes] = []
-        try! testQuote = context.fetch(Quotes.fetchRequest())
-        print(testQuote.count)
+        try! context.save()
+    
 //        return categories
         
     }
@@ -122,11 +114,17 @@ class NotionAPI
             
                let json = try! JSON(data: safeData)
                let results = json["results"]
+               print(results)
             
               if results != []
                {
                //print(results[0]["id"].stringValue)
-               self.updatePage(id: results[0]["id"].stringValue, author: author, Quote: Quote, category: Category)
+                  if author == "" {
+               self.updatePage(id: results[0]["id"].stringValue, author: "", Quote: Quote, category: Category)
+                  }
+                  else{
+                      self.updatePage(id: results[0]["id"].stringValue, author: author, Quote: Quote, category: Category)
+                  }
                }else
                {
                    self.addPage(quote: Quote, author: author, category: Category)
@@ -145,6 +143,7 @@ class NotionAPI
     
     func updatePage(id:String,author:String,Quote:String,category:String)
     {
+        print("Author\(author)")
         let headers = [
           "Accept": "application/json",
           "Notion-Version": "2022-02-22",
@@ -282,5 +281,140 @@ extension Array where Element: Hashable {
         self = self.removingDuplicates()
     }
 }
+
+
+//MARK: Delete Authors
+extension NotionAPI
+{
+    func deleteAuthor(author:String)
+    {
+        
+        let headers = [
+          "Accept": "application/json",
+          "Notion-Version": "2022-02-22",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer secret_qRBPjunNDhcYCkP5WhZ9HcZbZOsTf2lykgZeQewxdyS"
+        ]
+        
+        
+                let parameters = [
+                        "filter": [
+                            "property": "Author",
+                            "multi_select": [
+                                "contains": author
+                            ]
+                        ],
+                  "page_size": 100
+                ] as [String : Any]
+        
+        let postData = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+       
+        
+        let url = URL(string: "https://api.notion.com/v1/databases/9c07dc74b3444b7aaaea6fba7a9405fd/query")
+        var recquest = URLRequest(url: url!)
+        recquest.httpBody = postData! as Data
+        recquest.httpMethod = "POST"
+        recquest.allHTTPHeaderFields = headers
+        
+        let session = URLSession(configuration: .default)
+
+        let task =  session.dataTask(with: recquest) { (data, response, error) in
+           if let safeData = data {
+               
+              
+            
+               let json = try! JSON(data: safeData)
+               let results = json["results"]
+               //print(results)
+               for result in results{
+                   print(result.1["id"])
+                   self.deletePage(id:result.1["id"].stringValue)
+               }
+            
+            
+    }
+}
+        task.resume()
+        
+    }
+    
+
+    func deletePage(id:String)
+    {
+        let headers = [
+          "Accept": "application/json",
+          "Notion-Version": "2022-02-22",
+          "Authorization": "Bearer secret_qRBPjunNDhcYCkP5WhZ9HcZbZOsTf2lykgZeQewxdyS"
+        ]
+
+        let request = NSMutableURLRequest(url: NSURL(string: "https://api.notion.com/v1/blocks/\(id)")! as URL)
+                                                
+                                            
+        request.httpMethod = "DELETE"
+        request.allHTTPHeaderFields = headers
+
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+          if (error != nil) {
+              print("error")
+            print(error)
+          } else {
+            let httpResponse = response as? HTTPURLResponse
+              print("Succeed")
+            print(httpResponse)
+          }
+        })
+
+        dataTask.resume()
+    }
+    
+    func deleteQuote(quote:String)
+    {
+        print(quote)
+        let headers = [
+          "Accept": "application/json",
+          "Notion-Version": "2022-02-22",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer secret_qRBPjunNDhcYCkP5WhZ9HcZbZOsTf2lykgZeQewxdyS"
+        ]
+        
+        
+        let parameters = [
+          "page_size": 100,
+          "filter": [
+            "property": "Quote",
+            "rich_text": ["contains": quote]
+          ]
+        ] as [String : Any]
+        
+        let postData = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+       
+        
+        let url = URL(string: "https://api.notion.com/v1/databases/9c07dc74b3444b7aaaea6fba7a9405fd/query")
+        var recquest = URLRequest(url: url!)
+        recquest.httpBody = postData! as Data
+        recquest.httpMethod = "POST"
+        recquest.allHTTPHeaderFields = headers
+        
+        let session = URLSession(configuration: .default)
+
+        let task =  session.dataTask(with: recquest) { (data, response, error) in
+           if let safeData = data {
+               
+              
+            
+               let json = try! JSON(data: safeData)
+               let results = json["results"]
+               print(results)
+               self.deletePage(id: results[0]["id"].stringValue)       
+}
+     
+        
+    }
+        task.resume()
+    }
+}
+
+
 
 

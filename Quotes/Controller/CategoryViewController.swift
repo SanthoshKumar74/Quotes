@@ -37,6 +37,11 @@ class CategoryViewController:UICollectionViewController
         //retriveData()
         collectionView.reloadData()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        notion.retriveData()
+        self.retriveData()
+        collectionView.reloadData()
+    }
 }
 
 
