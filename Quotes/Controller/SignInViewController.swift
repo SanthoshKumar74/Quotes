@@ -17,23 +17,22 @@ let notion = NotionAPI()
     @IBAction func signInButton(_ sender: Any) {
     
     
-         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
-            guard error == nil
-             else { return }
-             guard let user = user else {return}
+      //   GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { user, error in
+        //    guard error == nil
+          //   else { return }
+           //  guard let user = user else {return}
        
              self.performSegue(withIdentifier: "goToQuotes", sender: sender)
      
            
       
-          }
+        //  }
     
    }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       notion.retriveData()
     }
 
 

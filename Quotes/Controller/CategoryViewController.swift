@@ -13,6 +13,7 @@ import CoreData
 class CategoryViewController:UICollectionViewController
 {
     let notion = NotionAPI()
+    let container = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var textField = UITextField()
     private var categories:[Category] = []
@@ -25,6 +26,7 @@ class CategoryViewController:UICollectionViewController
     }
     
     let refreshControl = UIRefreshControl()
+   
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -38,10 +40,22 @@ class CategoryViewController:UICollectionViewController
         collectionView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        notion.retriveData()
-        self.retriveData()
-        collectionView.reloadData()
+        notion.retriveData(){ result in
+            switch result{
+            case .Success(_,let categories,_):
+                
+                self.categories = categories
+                print(categories.count)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+              
+            case .Failure(let error):
+                print(error)
+            }
     }
+      
+}
 }
 
 
@@ -78,6 +92,7 @@ extension CategoryViewController{
 extension CategoryViewController
 {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(categories.count)
         return categories.count + 1
         
     }
@@ -158,11 +173,27 @@ extension CategoryViewController
 {
     @objc func refresh()
     {
-            notion.retriveData()
-            retriveData()
+    
+        self.notion.retriveData(){ result in
+            switch result{
+            case .Success(_,let categories,_):
+                self.categories = categories
+                print(categories.count)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+                   
+                
+            case .Failure(let error):
+                print(error)
+            }
+            
+        
+    }
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()
 
                 
     }
 }
+

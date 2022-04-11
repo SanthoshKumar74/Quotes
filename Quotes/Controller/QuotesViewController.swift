@@ -27,13 +27,30 @@ class QuotesViewController:UITableViewController
         quotesRefreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.addSubview(quotesRefreshControl)
         //self.retriveData(category: selectedCategory!)
-        //tableView.reloadData()
+        tableView.reloadData()
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        notion.retriveData()
-//        retriveData(category: selectedCategory!)
-//        tableView.reloadData()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+            
+        
+        self.notion.retriveData(){ [self] Result in
+            switch Result{
+                
+            case .Success( _, _, _):
+                self.retriveData(category: selectedCategory!)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+             
+                print(self.quotesToShow)
+            case .Failure(let error):
+                print(error)
+            }
+        
+        }
+       // retriveData(category: selectedCategory!)
+    
+    }
     
   
     //private var selectedCategory:Category
@@ -52,7 +69,10 @@ class QuotesViewController:UITableViewController
             }catch{
                 print("error Loading Data\(error)")
             }
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
         
     }
 
@@ -123,10 +143,28 @@ extension QuotesViewController
 {
     @objc func refresh()
     {
-        notion.retriveData()
-        self.retriveData(category: selectedCategory!)
-        print("Quotes after Retrived")
-        print(quotesToShow.count)
+        
+    
+        
+        self.notion.retriveData(){ [self] Result in
+            switch Result{
+                
+            case .Success( _, _, _):
+                self.retriveData(category: selectedCategory!)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+             
+                print(self.quotesToShow)
+            case .Failure(let error):
+                print(error)
+            }
+        
+        }
+        
+    
+        //self.retriveData(category: selectedCategory!)
         tableView.reloadData()
         quotesRefreshControl.endRefreshing()
         

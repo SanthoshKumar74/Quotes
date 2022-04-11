@@ -18,9 +18,8 @@ class NotionAPI
     var authors : [Author] = []
    
     
-     func retriveData()
+    func retriveData(completion:@escaping (Result<[Quotes],[Category],[Author]>)-> Void)
     {
-       deleteCoreData()
         let headers = [
           "Accept": "application/json",
           "Notion-Version": "2022-02-22",
@@ -48,14 +47,26 @@ class NotionAPI
 
         let session = URLSession(configuration: .default)
         let task =  session.dataTask(with: recquest) { [self] (data, response, error) in
-           if let safeData = data {
+           // persistentContainer.performBackgroundTask { context in
+                
             
-               let json = try! JSON(data: safeData)
+            do{
+           if let safeData = data {
+               if Thread.isMainThread {
+                   print("thread is on mail")
+               }else{
+                   print("off main thread")
+               }
+            
+               let json = try JSON(data: safeData)
                let results = json["results"]
                print("NotionAPI results count")
                print(results.count)
                for result in results
                {
+                   authors = try context.fetch(Author.fetchRequest()) as [Author]
+                   categories = try context.fetch(Category.fetchRequest()) as [Category]
+                   
                    let newQuote = Quotes(context:context)
                    let newAuthor = Author(context: context)
                    let newCategory = Category(context: context)
@@ -65,16 +76,45 @@ class NotionAPI
                            newCategory.name = result.1["properties"]["Category"]["multi_select"][0]["name"].string
                            newQuote.parentCategory = newCategory
                    }
+               
+               do
+               {
+                   Quote = try context.fetch(Quotes.fetchRequest()) as [Quotes]
+                   authors = try context.fetch(Author.fetchRequest()) as [Author]
+                   categories = try context.fetch(Category.fetchRequest()) as [Category]
+               }
+               catch
+               {
+                   print(error)
+               }
+               
+               
+               self.Quote =  Quote.unique{$0.quote}
+               self.categories = categories.unique{$0.name}
+               self.authors = authors.unique{$0.name}
+            
+               
+               print(Quote)
+               print(authors)
+               print(categories)
+            
+                   completion(.Success(Quote, categories, authors))
+               
                   
                    
-                   }
+           }
                    //self.Quote.append(quote)
          
-           }
+           
+        }
+            catch
+             {
+                return completion(.Failure(error.localizedDescription))
+            }
+        }
+       // }
         task.resume()
         try! context.save()
-    
-//        return categories
         
     }
     
@@ -268,20 +308,6 @@ extension NotionAPI
 }
 
 
-extension Array where Element: Hashable {
-    func removingDuplicates() -> [Element] {
-        var addedDict = [Element: Bool]()
-
-        return filter {
-            addedDict.updateValue(true, forKey: $0) == nil
-        }
-    }
-
-    mutating func removeDuplicates() {
-        self = self.removingDuplicates()
-    }
-}
-
 
 //MARK: Delete Authors
 extension NotionAPI
@@ -415,6 +441,50 @@ extension NotionAPI
     }
 }
 
+
+enum Result<Quote,Author,Category>
+{
+    case  Success(Quote,Author,Category)
+    case  Failure(String)
+}
+
+extension Array {
+    func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
+        var set = Set<T>() //the unique list kept in a Set for fast retrieval
+        var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
+        for value in self {
+            if !set.contains(map(value)) {
+                set.insert(map(value))
+                arrayOrdered.append(value)
+            }else{DispatchQueue.main.async {
+                
+                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    context.delete(value as! NSManagedObject)
+                do{
+                    try context.save()
+                }
+                catch{
+                    print(error.localizedDescription)
+                }
+            }
+            }
+        }
+
+        return arrayOrdered
+    }
+}
+
+extension Array where Element: Equatable {
+    mutating func removeDuplicates() {
+        var result = [Element]()
+        for value in self {
+            if !result.contains(value) {
+                result.append(value)
+            }
+        }
+        self = result
+    }
+}
 
 
 
