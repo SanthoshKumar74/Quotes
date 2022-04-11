@@ -33,22 +33,22 @@ class QuotesViewController:UITableViewController
             
         
         self.notion.retriveData(){ [self] Result in
-            switch Result{
-                
-            case .Success( _, _, _):
-                self.retriveData(category: selectedCategory!)
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-             
-                print(self.quotesToShow)
-            case .Failure(let error):
-                print(error)
-            }
-        
+//            switch Result{
+//
+//            case .Success( _, _, _):
+//                self.retriveData(category: selectedCategory!)
+//
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//
+//                print(self.quotesToShow)
+//            case .Failure(let error):
+//                print(error)
+//            }
+            self.retriveData(category: selectedCategory!)
         }
-       // retriveData(category: selectedCategory!)
+    
     
     }
     
@@ -147,24 +147,25 @@ extension QuotesViewController
     
         
         self.notion.retriveData(){ [self] Result in
-            switch Result{
-                
-            case .Success( _, _, _):
+         //   switch Result{
+//
+//            case .Success( _, _, _):
+//                self.retriveData(category: selectedCategory!)
+//
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//
+//                print(self.quotesToShow)
+//            case .Failure(let error):
+//                print(error)
+//            }
                 self.retriveData(category: selectedCategory!)
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-             
-                print(self.quotesToShow)
-            case .Failure(let error):
-                print(error)
-            }
         
         }
         
     
-        //self.retriveData(category: selectedCategory!)
+     
         tableView.reloadData()
         quotesRefreshControl.endRefreshing()
         

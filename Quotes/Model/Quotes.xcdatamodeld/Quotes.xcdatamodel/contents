@@ -16,6 +16,6 @@
     <elements>
         <element name="Author" positionX="181.4921875" positionY="-13.10546875" width="128" height="73"/>
         <element name="Category" positionX="205.12890625" positionY="200.23046875" width="128" height="73"/>
-        <element name="Quotes" positionX="-18" positionY="32.62890625" width="128" height="74"/>
+        <element name="Quotes" positionX="-18" positionY="32.62890625" width="128" height="88"/>
     </elements>
 </model>

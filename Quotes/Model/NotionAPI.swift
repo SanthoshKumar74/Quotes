@@ -47,7 +47,7 @@ class NotionAPI
 
         let session = URLSession(configuration: .default)
         let task =  session.dataTask(with: recquest) { [self] (data, response, error) in
-           // persistentContainer.performBackgroundTask { context in
+          persistentContainer.performBackgroundTask { context in
                 
             
             do{
@@ -75,6 +75,7 @@ class NotionAPI
                            newQuote.authorCategory = newAuthor
                            newCategory.name = result.1["properties"]["Category"]["multi_select"][0]["name"].string
                            newQuote.parentCategory = newCategory
+                   try! context.save()
                    }
                
                do
@@ -88,17 +89,25 @@ class NotionAPI
                    print(error)
                }
                
+               print(Quote)
                
-               self.Quote =  Quote.unique{$0.quote}
-               self.categories = categories.unique{$0.name}
-               self.authors = authors.unique{$0.name}
+               
+           
+           
+              self.authors = authors.unique(context:context){$0.name}
+               self.Quote =  Quote.unique(context:context){($0.quote)}
+               self.categories = categories.unique(context:context){$0.name}
             
                
                print(Quote)
-               print(authors)
-               print(categories)
-            
+               //print(authors)
+               //print(categories)
+               
+               
+               DispatchQueue.main.async {
                    completion(.Success(Quote, categories, authors))
+               }
+               
                
                   
                    
@@ -112,9 +121,9 @@ class NotionAPI
                 return completion(.Failure(error.localizedDescription))
             }
         }
-       // }
+        }
         task.resume()
-        try! context.save()
+    
         
     }
     
@@ -449,16 +458,18 @@ enum Result<Quote,Author,Category>
 }
 
 extension Array {
-    func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
+    func unique<T:Hashable>(context:NSManagedObjectContext,map: ((Element) -> (T)))  -> [Element] {
+        //let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
         var set = Set<T>() //the unique list kept in a Set for fast retrieval
         var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
         for value in self {
             if !set.contains(map(value)) {
                 set.insert(map(value))
                 arrayOrdered.append(value)
-            }else{DispatchQueue.main.async {
+            }else{
+            
                 
-                    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+                    //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
                     context.delete(value as! NSManagedObject)
                 do{
                     try context.save()
@@ -466,25 +477,16 @@ extension Array {
                 catch{
                     print(error.localizedDescription)
                 }
+                
             }
-            }
+            
+            
         }
 
         return arrayOrdered
     }
 }
 
-extension Array where Element: Equatable {
-    mutating func removeDuplicates() {
-        var result = [Element]()
-        for value in self {
-            if !result.contains(value) {
-                result.append(value)
-            }
-        }
-        self = result
-    }
-}
 
 
 

@@ -37,24 +37,31 @@ class CategoryViewController:UICollectionViewController
         collectionView.addSubview(refreshControl)
         collectionView.alwaysBounceVertical = true
         //retriveData()
+        collectionView.dataSource = self
         collectionView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
         notion.retriveData(){ result in
-            switch result{
-            case .Success(_,let categories,_):
-                
-                self.categories = categories
-                print(categories.count)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-              
-            case .Failure(let error):
-                print(error)
-            }
+//            switch result{
+//            case .Success(_,let categories,_):
+//
+//
+//                self.categories = categories
+//               DispatchQueue.main.async {
+//                   print("succeded")
+//                   for category in categories {
+//                       print(category.name!)
+//                   }
+//                    self.collectionView.reloadData()
+//               }
+//
+//            case .Failure(let error):
+//                print(error)
+//            }
+            
+            self.retriveData()
     }
-      
+        
 }
 }
 
@@ -103,6 +110,7 @@ extension CategoryViewController
             return addCell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "categoryCell", for: indexPath) as! CategoryCell
+        print(categories[indexPath.row-1].name)
         cell.configure(category: categories[indexPath.row-1],image:UIImage(named:"Quotes")!)
         
         return cell
@@ -175,21 +183,22 @@ extension CategoryViewController
     {
     
         self.notion.retriveData(){ result in
-            switch result{
-            case .Success(_,let categories,_):
-                self.categories = categories
-                print(categories.count)
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-                   
-                
-            case .Failure(let error):
-                print(error)
+//            switch result{
+//            case .Success(_,let categories,_):
+//                self.categories = categories
+//                print(categories.count)
+//               DispatchQueue.main.async {
+//                    self.collectionView.reloadData()
+//                }
+//
+//
+//            case .Failure(let error):
+//                print(error)
+            self.retriveData()
             }
             
         
-    }
+    
             self.collectionView.reloadData()
             self.refreshControl.endRefreshing()
 
