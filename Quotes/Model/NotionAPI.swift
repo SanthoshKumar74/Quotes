@@ -91,12 +91,10 @@ class NotionAPI
                
                print(Quote)
                
-               
-           
-           
-              self.authors = authors.unique(context:context){$0.name}
-               self.Quote =  Quote.unique(context:context){($0.quote)}
-               self.categories = categories.unique(context:context){$0.name}
+               //self.Quote =  Quote.unique(context:context, objectType: "Quote"){($0.quote)}
+               //self.authors = authors.unique(context:context, objectType:"Author"){$0.name}
+               //self.categories = categories.unique(context:context, objectType: "Category"){$0.name}
+              
             
                
                print(Quote)
@@ -457,8 +455,47 @@ enum Result<Quote,Author,Category>
     case  Failure(String)
 }
 
+//extension Array {
+//    func unique<T:Hashable>(context:NSManagedObjectContext,objectType:String,map: ((Element) -> (T)))  -> [Element] {
+//        //let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
+//        var set = Set<T>() //the unique list kept in a Set for fast retrieval
+//        var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
+//        for value in self {
+//            if !set.contains(map(value)) {
+//                set.insert(map(value))
+//                arrayOrdered.append(value)
+//            }else{
+//                if objectType == "Quote"{
+//
+//                    context.delete(value as! Quotes)
+//                }else{
+//                    if objectType == "Author"{
+//                        context.delete(value as! Author)
+//                    }
+//                    else
+//                    {
+//                        context.delete(value as! Category)
+//                    }
+//                }
+//
+//                do{
+//                    try context.save()
+//                }
+//                catch{
+//                    print(error.localizedDescription)
+//                }
+//
+//            }
+//
+//
+//        }
+//
+//        return arrayOrdered
+//    }
+//}
+
 extension Array {
-    func unique<T:Hashable>(context:NSManagedObjectContext,map: ((Element) -> (T)))  -> [Element] {
+    func unique<T:Hashable>(map: ((Element) -> (T)))  -> [Element] {
         //let persistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer
         var set = Set<T>() //the unique list kept in a Set for fast retrieval
         var arrayOrdered = [Element]() //keeping the unique list of elements but ordered
@@ -467,16 +504,7 @@ extension Array {
                 set.insert(map(value))
                 arrayOrdered.append(value)
             }else{
-            
                 
-                    //let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-                    context.delete(value as! NSManagedObject)
-                do{
-                    try context.save()
-                }
-                catch{
-                    print(error.localizedDescription)
-                }
                 
             }
             

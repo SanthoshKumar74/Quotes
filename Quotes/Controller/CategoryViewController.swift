@@ -165,6 +165,7 @@ extension CategoryViewController
         
         do{
     try  categories = context.fetch(Category.fetchRequest()) as [Category]
+            self.categories = categories.unique(){$0.name}
 }
         catch
         {

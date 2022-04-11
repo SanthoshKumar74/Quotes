@@ -33,20 +33,20 @@ class QuotesViewController:UITableViewController
             
         
         self.notion.retriveData(){ [self] Result in
-//            switch Result{
-//
-//            case .Success( _, _, _):
-//                self.retriveData(category: selectedCategory!)
-//
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//
-//                print(self.quotesToShow)
-//            case .Failure(let error):
-//                print(error)
-//            }
-            self.retriveData(category: selectedCategory!)
+            switch Result{
+
+            case .Success( _, _, _):
+                self.retriveData(category: selectedCategory!)
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+
+                print(self.quotesToShow)
+            case .Failure(let error):
+                print(error)
+            }
+           // self.retriveData(category: selectedCategory!)
         }
     
     
@@ -63,6 +63,7 @@ class QuotesViewController:UITableViewController
                let predicate = NSPredicate(format: "parentCategory.name MATCHES %@", category.name!)
                 fetchrecquest.predicate = predicate
                 try quotesToShow = context.fetch(fetchrecquest) as! [Quotes]
+                self.quotesToShow = quotesToShow.unique(){$0.quote}
                 print("Count inside retriveData")
                 print(quotesToShow.count)
                 
@@ -147,20 +148,20 @@ extension QuotesViewController
     
         
         self.notion.retriveData(){ [self] Result in
-         //   switch Result{
-//
-//            case .Success( _, _, _):
-//                self.retriveData(category: selectedCategory!)
-//
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//
-//                print(self.quotesToShow)
-//            case .Failure(let error):
-//                print(error)
-//            }
+            switch Result{
+
+            case .Success( _, _, _):
                 self.retriveData(category: selectedCategory!)
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+
+                print(self.quotesToShow)
+            case .Failure(let error):
+                print(error)
+            }
+               // self.retriveData(category: selectedCategory!)
         
         }
         
