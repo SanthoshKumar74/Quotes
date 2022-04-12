@@ -25,6 +25,20 @@ class CategoryViewController:UICollectionViewController
         navigationController?.popToRootViewController(animated: true)
     }
     
+    @IBAction func deleteButtonPressed(_ sender: UIBarButtonItem) {
+        var text = UITextField()
+                let alert = UIAlertController(title: "Delete Category", message: nil, preferredStyle: .actionSheet)
+                alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
+                    alert.addTextField { alertTextField in
+                        alertTextField.placeholder = "Create a New Category"
+                        text = alertTextField
+                    }
+                    self.notion.deleteCategory(category:text.text! )
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                present(alert, animated: true, completion: nil)
+    }
     let refreshControl = UIRefreshControl()
    
     override func viewDidLoad()
@@ -38,10 +52,11 @@ class CategoryViewController:UICollectionViewController
         collectionView.alwaysBounceVertical = true
         //retriveData()
         collectionView.dataSource = self
+        collectionView.allowsMultipleSelection =  true
         collectionView.reloadData()
     }
     override func viewWillAppear(_ animated: Bool) {
-        notion.retriveData(){ result in
+       // notion.retriveData(){ result in
 //            switch result{
 //            case .Success(_,let categories,_):
 //
@@ -60,7 +75,7 @@ class CategoryViewController:UICollectionViewController
 //            }
             
             self.retriveData()
-    }
+    //}
         
 }
 }
@@ -80,6 +95,8 @@ extension CategoryViewController{
                 self.categories.append(category)
                 try! self.context.save()
                 self.retriveData()
+              print("Count after dta retrived from coredata")
+              print(self.categories.count)
                 self.collectionView.reloadData()
             
             }
@@ -206,4 +223,33 @@ extension CategoryViewController
                 
     }
 }
+
+extension CategoryViewController{
+  
+  override func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+    let content = UIContextMenuConfiguration(identifier: nil, previewProvider: nil) {  _ in
+      let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), identifier: nil, discoverabilityTitle: nil) { [self] _ in
+        let action = UIAlertController(title: "Confirm Delete all Quotes in \(self.categories[indexPath.row-1].name!)", message: "Deletes all the quotes associated with this category", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let confirm = UIAlertAction(title: "Confirm", style: .default) { _ in
+          print("confirm")
+          self.notion.deleteCategory(category: self.categories[indexPath.row-1].name!)
+          self.categories.remove(at: indexPath.row-1)
+          self.collectionView.reloadData()
+          
+        }
+        action.addAction(confirm)
+        action.addAction(cancel)
+        self.present(action, animated: true)
+      }
+      return UIMenu(title: "", image: nil, identifier: nil, options: UIMenu.Options.displayInline, children: [delete])
+
+    }
+    return content
+  }
+    
+    
+}
+    
+
 

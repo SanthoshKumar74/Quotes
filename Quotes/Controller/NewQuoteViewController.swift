@@ -21,25 +21,42 @@ class NewQuoteViewController:UIViewController
     @IBOutlet var quoteImage: UIImageView!
     @IBOutlet var quoteText: UITextView?
     @IBOutlet var categoryPicker: UIPickerView!
-    @IBOutlet var authorText: UITextField!
+    @IBOutlet var authorText: UITextField!{
+        didSet{
+            if authorText == nil{
+                print("Set to nil")
+            }
+        }
+    }
     @IBAction func deleteButtonPressed(_ sender: Any) {
+//        let alert = UIAlertController(title: "Delete Author", message: nil, preferredStyle: .actionSheet)
+//
+//        alert.addAction(UIAlertAction(title: "Delete only author", style: .default, handler: { _ in
+//            self.authorText.text! = " "
+//        }))
+//
+//        alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
+//            self.notion.deleteAuthor(author: self.authorText.text!)
+//            self.navigationController?.popViewController(animated: true)
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        present(alert, animated: true, completion: nil)
         let alert = UIAlertController(title: "Delete Author", message: nil, preferredStyle: .actionSheet)
-        
-        alert.addAction(UIAlertAction(title: "Delete only author", style: .default, handler: { _ in
-            self.authorText.text! = " "
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
-            self.notion.deleteAuthor(author: self.authorText.text!)
-            self.navigationController?.popViewController(animated: true)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alert, animated: true, completion: nil)
+       
+              
+       
+               alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
+                   self.notion.deleteAuthor(author: self.authorText.text!)
+                   self.navigationController?.popViewController(animated: true)
+               }))
+               alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+               present(alert, animated: true, completion: nil)
         
     }
     @IBAction func saveQuote(_ sender: UIButton) {
-        print("author \(authorText.text!)")
-        saveNewQuote(quote: quoteText!.text!, author: authorText.text!, category: categories[categoryPicker.selectedRow(inComponent: 0)].name!)
+        
+      let compact = categories.unique(){$0.name}
+        saveNewQuote(quote: quoteText!.text!, author: authorText.text!, category: compact[categoryPicker.selectedRow(inComponent: 0)].name!)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +65,8 @@ class NewQuoteViewController:UIViewController
         quoteText!.clipsToBounds = true
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Category")
         categories = try! context.fetch(fetchRequest) as! [Category]
+        print("New Category")
+        print(categories.count)
         let index = indexOf(selectedCategory: selectedCategory!)
         categoryPicker.selectRow( index , inComponent: 0, animated: true)
         let tap = UITapGestureRecognizer(target: self, action:#selector(cancelEdititing))
@@ -149,11 +168,13 @@ extension NewQuoteViewController:UIPickerViewDelegate,UIPickerViewDataSource{
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-       return categories.count
+        let compact = categories.unique(){$0.name}
+       return compact.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return categories[row].name
+        let compact = categories.unique(){$0.name}
+        return compact[row].name
     }
 }
 
@@ -171,7 +192,8 @@ extension NewQuoteViewController
     func configureAuthortext(author:String)
     {
         DispatchQueue.main.async {
-            self.authorText!.text = author
+            print(author)
+            self.authorText.text = author ?? ""
         }
     }
 }
@@ -182,6 +204,7 @@ extension NewQuoteViewController
 {
     func saveNewQuote(quote:String,author:String,category:String)
     {
+        print(category)
                //notion.addPage(quote: quote, author: author, category: category)
         notion.updateData(author: author, Quote: quote, Category: category)
         navigationController?.popViewController(animated: true)
@@ -197,13 +220,16 @@ extension NewQuoteViewController
 {
     func indexOf(selectedCategory: Category)-> Int
     { var index = 0
-        for category in self.categories
+      let compact = self.categories.unique(){$0.name}
+      for category in compact
         {
             if category.name == selectedCategory.name{
+              print("index of Selected item\(index)")
                 return index
             }
             index += 1
         }
+      print("fullindex")
         return index
     }
 }

@@ -20,6 +20,7 @@ class NotionAPI
     
     func retriveData(completion:@escaping (Result<[Quotes],[Category],[Author]>)-> Void)
     {
+        deleteCoreData()
         let headers = [
           "Accept": "application/json",
           "Notion-Version": "2022-02-22",
@@ -309,6 +310,8 @@ extension NotionAPI
         catch{
             
         }
+        
+        try! context.save()
 
 
 }
@@ -446,6 +449,59 @@ extension NotionAPI
     }
         task.resume()
     }
+    
+    func deleteCategory(category:String)
+    {
+        
+        let headers = [
+          "Accept": "application/json",
+          "Notion-Version": "2022-02-22",
+          "Content-Type": "application/json",
+          "Authorization": "Bearer secret_qRBPjunNDhcYCkP5WhZ9HcZbZOsTf2lykgZeQewxdyS"
+        ]
+        
+        
+                let parameters = [
+                        "filter": [
+                            "property": "Category",
+                            "multi_select": [
+                                "contains": category
+                            ]
+                        ],
+                  "page_size": 100
+                ] as [String : Any]
+        
+        let postData = try? JSONSerialization.data(withJSONObject: parameters, options: [])
+       
+        
+        let url = URL(string: "https://api.notion.com/v1/databases/9c07dc74b3444b7aaaea6fba7a9405fd/query")
+        var recquest = URLRequest(url: url!)
+        recquest.httpBody = postData! as Data
+        recquest.httpMethod = "POST"
+        recquest.allHTTPHeaderFields = headers
+        
+        let session = URLSession(configuration: .default)
+
+        let task =  session.dataTask(with: recquest) { (data, response, error) in
+           if let safeData = data {
+               
+              
+            
+               let json = try! JSON(data: safeData)
+               let results = json["results"]
+               //print(results)
+               for result in results{
+                   print(result.1["id"])
+                   self.deletePage(id:result.1["id"].stringValue)
+               }
+            
+            
+    }
+}
+        task.resume()
+        
+    }
+    
 }
 
 

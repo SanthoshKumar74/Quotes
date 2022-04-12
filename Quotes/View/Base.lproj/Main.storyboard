@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ml0-v8-Cui">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ml0-v8-Cui">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -264,7 +264,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ndX-gm-SO8">
-                                <rect key="frame" x="62" y="163" width="292" height="34"/>
+                                <rect key="frame" x="62" y="163" width="352" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -294,17 +294,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwm-lj-0Qr">
-                                <rect key="frame" x="354" y="162" width="60" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="8gf-7T-jFo"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
-                                <connections>
-                                    <action selector="deleteButtonPressed:" destination="bA1-S8-Vph" eventType="touchUpInside" id="8dB-Wg-E2a"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iwh-vZ-ZYG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -313,10 +302,9 @@
                             <constraint firstItem="ndX-gm-SO8" firstAttribute="leading" secondItem="vCU-XS-NR1" secondAttribute="trailing" id="44s-lk-thR"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="ndX-gm-SO8" secondAttribute="bottom" constant="31" id="4Gd-5u-3Nu"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="trailing" secondItem="iwh-vZ-ZYG" secondAttribute="trailing" id="8Zu-kd-SX9"/>
-                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="ndX-gm-SO8" secondAttribute="trailing" constant="60" id="AdA-0l-wAB"/>
+                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="ndX-gm-SO8" secondAttribute="trailing" id="AdA-0l-wAB"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="6J3-Qf-DOI" secondAttribute="trailing" id="BMM-cV-UGY"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="leading" secondItem="ige-pj-rcj" secondAttribute="trailing" id="EG6-Rs-wQ9"/>
-                            <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="vwm-lj-0Qr" secondAttribute="bottom" constant="32" id="Eas-3F-sN5"/>
                             <constraint firstItem="vdI-1w-gIi" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="F1z-Nq-3Lm"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="80" id="K3F-Ce-Y9o"/>
                             <constraint firstItem="ige-pj-rcj" firstAttribute="top" secondItem="iwh-vZ-ZYG" secondAttribute="top" id="LXI-QZ-rkp"/>
@@ -327,12 +315,10 @@
                             <constraint firstItem="ige-pj-rcj" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" constant="10" id="UNF-si-kBc"/>
                             <constraint firstItem="vdI-1w-gIi" firstAttribute="top" secondItem="EW5-s0-gaR" secondAttribute="bottom" constant="30" id="YXG-MZ-a28"/>
                             <constraint firstItem="vCU-XS-NR1" firstAttribute="top" secondItem="ige-pj-rcj" secondAttribute="bottom" id="Yqb-S7-OtU"/>
-                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="vwm-lj-0Qr" secondAttribute="trailing" id="bsH-gb-Nr6"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="bottom" secondItem="vdI-1w-gIi" secondAttribute="bottom" constant="20" id="e1V-qL-kLN"/>
                             <constraint firstItem="vCU-XS-NR1" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="5" id="f1U-Ab-EOz"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="bottom" secondItem="6J3-Qf-DOI" secondAttribute="bottom" constant="150" id="icS-0i-qyH"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="zFe-dK-Ap7" secondAttribute="trailing" constant="5" id="jUw-6e-0i0"/>
-                            <constraint firstItem="vwm-lj-0Qr" firstAttribute="leading" secondItem="ndX-gm-SO8" secondAttribute="trailing" id="lkA-CE-QSF"/>
                             <constraint firstItem="EW5-s0-gaR" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="o3A-cw-PzQ"/>
                             <constraint firstItem="zFe-dK-Ap7" firstAttribute="top" secondItem="6J3-Qf-DOI" secondAttribute="bottom" id="ovK-mZ-hdP"/>
                             <constraint firstItem="zFe-dK-Ap7" firstAttribute="leading" secondItem="EW5-s0-gaR" secondAttribute="trailing" constant="5" id="pOC-Pc-K4j"/>
@@ -349,7 +335,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="authorText" destination="ndX-gm-SO8" id="yZ8-f0-Tet"/>
+                        <outlet property="authorText" destination="ndX-gm-SO8" id="wDi-cg-pKP"/>
                         <outlet property="categoryPicker" destination="zFe-dK-Ap7" id="oHU-jf-Ab3"/>
                         <outlet property="quoteImage" destination="6J3-Qf-DOI" id="kPE-Un-54y"/>
                         <outlet property="quoteText" destination="kw3-wS-i6q" id="Db8-rt-1rI"/>
@@ -386,7 +372,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wgv-HH-nHT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5370" y="98"/>
+            <point key="canvasLocation" x="5803" y="22"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="niz-N1-89u">
@@ -408,13 +394,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cV4-fz-To9"/>
+        <segue reference="7UN-gy-WYW"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Quotes" width="125" height="125"/>
         <image name="icons8-google-144" width="36" height="36"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -12,6 +12,7 @@ class AuthorViewController:UITableViewController{
     var authors:[Author] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         retriveData()
     }
     
@@ -35,14 +36,10 @@ extension AuthorViewController{
 extension AuthorViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-       let VC = NewQuoteViewController()
-        print(authors[indexPath.row].name)
-        if let authorName = authors[indexPath.row].name {
-            print(authorName)
-        VC.configureAuthortext(author: authorName)
-        }
+        
         dismiss(animated: true, completion: nil)
-    }
+        
+        }
 }
 
 extension AuthorViewController
@@ -51,9 +48,12 @@ extension AuthorViewController
     {
         do{
             try authors = context.fetch(Author.fetchRequest()) as [Author]
+            authors = authors.unique(){$0.name}
         }
         catch{
             print("Error fetching Data\(error)")
         }
     }
 }
+
+
