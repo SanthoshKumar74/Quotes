@@ -17,8 +17,10 @@ class NewQuoteViewController:UIViewController
     let notion = NotionAPI()
     var selectedCategory: Category?
     var quoteString = ""
+  var new:Bool = true
 
-    @IBOutlet var quoteImage: UIImageView!
+  @IBOutlet var deleteButton: UIButton!
+  @IBOutlet var quoteImage: UIImageView!
     @IBOutlet var quoteText: UITextView?
     @IBOutlet var categoryPicker: UIPickerView!
     @IBOutlet var authorText: UITextField!{
@@ -29,28 +31,28 @@ class NewQuoteViewController:UIViewController
         }
     }
     @IBAction func deleteButtonPressed(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete Author", message: nil, preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Delete only author", style: .default, handler: { _ in
+            self.authorText.text! = " "
+        }))
+
+        alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
+            self.notion.deleteAuthor(author: self.authorText.text!)
+            self.navigationController?.popViewController(animated: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
 //        let alert = UIAlertController(title: "Delete Author", message: nil, preferredStyle: .actionSheet)
 //
-//        alert.addAction(UIAlertAction(title: "Delete only author", style: .default, handler: { _ in
-//            self.authorText.text! = " "
-//        }))
 //
-//        alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
-//            self.notion.deleteAuthor(author: self.authorText.text!)
-//            self.navigationController?.popViewController(animated: true)
-//        }))
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//        present(alert, animated: true, completion: nil)
-        let alert = UIAlertController(title: "Delete Author", message: nil, preferredStyle: .actionSheet)
-       
-              
-       
-               alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
-                   self.notion.deleteAuthor(author: self.authorText.text!)
-                   self.navigationController?.popViewController(animated: true)
-               }))
-               alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-               present(alert, animated: true, completion: nil)
+//
+//               alert.addAction(UIAlertAction(title: "Delete all Quotes Associated with the author", style: .default, handler: { _ in
+//                   self.notion.deleteAuthor(author: self.authorText.text!)
+//                   self.navigationController?.popViewController(animated: true)
+//               }))
+//               alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//               present(alert, animated: true, completion: nil)
         
     }
     @IBAction func saveQuote(_ sender: UIButton) {
@@ -61,6 +63,9 @@ class NewQuoteViewController:UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         print(quoteString)
+      if new {
+        deleteButton.isHidden = true
+      }
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
         quoteText!.clipsToBounds = true
@@ -185,6 +190,7 @@ extension NewQuoteViewController
     func configure(quote:Quotes)
     {
       quoteString = quote.quote!
+    new = false
         DispatchQueue.main.async {
             self.authorText.text = quote.authorCategory?.name
             self.quoteText!.text = quote.quote

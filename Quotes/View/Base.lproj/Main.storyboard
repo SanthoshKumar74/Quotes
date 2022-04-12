@@ -184,7 +184,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Quote" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m5k-B4-a3w">
                                             <rect key="frame" x="20" y="11" width="80" height="61.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" systemColor="systemBlueColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIG-au-Q8B">
@@ -210,6 +210,7 @@
                                         <constraint firstItem="ylb-ib-911" firstAttribute="leading" secondItem="m5k-B4-a3w" secondAttribute="trailing" id="ycY-jt-n8D"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <outlet property="authorLabel" destination="OIG-au-Q8B" id="zGX-O3-p8f"/>
                                     <outlet property="quoteView" destination="ylb-ib-911" id="Ucd-8j-xnX"/>
@@ -264,7 +265,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ndX-gm-SO8">
-                                <rect key="frame" x="62" y="163" width="352" height="34"/>
+                                <rect key="frame" x="67" y="163" width="287" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -294,18 +295,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hzs-zz-qaQ">
+                                <rect key="frame" x="354" y="168" width="60" height="29"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                <connections>
+                                    <action selector="deleteButtonPressed:" destination="bA1-S8-Vph" eventType="touchUpInside" id="nrz-F9-bpW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="iwh-vZ-ZYG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vdI-1w-gIi" firstAttribute="top" secondItem="zFe-dK-Ap7" secondAttribute="bottom" constant="10" id="3O6-0Q-8Fl"/>
-                            <constraint firstItem="ndX-gm-SO8" firstAttribute="leading" secondItem="vCU-XS-NR1" secondAttribute="trailing" id="44s-lk-thR"/>
+                            <constraint firstItem="ndX-gm-SO8" firstAttribute="leading" relation="lessThanOrEqual" secondItem="vCU-XS-NR1" secondAttribute="trailing" constant="5" id="44s-lk-thR"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="ndX-gm-SO8" secondAttribute="bottom" constant="31" id="4Gd-5u-3Nu"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="trailing" secondItem="iwh-vZ-ZYG" secondAttribute="trailing" id="8Zu-kd-SX9"/>
-                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="ndX-gm-SO8" secondAttribute="trailing" id="AdA-0l-wAB"/>
                             <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="6J3-Qf-DOI" secondAttribute="trailing" id="BMM-cV-UGY"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="leading" secondItem="ige-pj-rcj" secondAttribute="trailing" id="EG6-Rs-wQ9"/>
+                            <constraint firstItem="Hzs-zz-qaQ" firstAttribute="trailing" secondItem="iwh-vZ-ZYG" secondAttribute="trailing" id="EWq-Zm-Lc6"/>
                             <constraint firstItem="vdI-1w-gIi" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="F1z-Nq-3Lm"/>
+                            <constraint firstItem="Hzs-zz-qaQ" firstAttribute="leading" secondItem="ndX-gm-SO8" secondAttribute="trailing" id="JU4-N2-4ay"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="80" id="K3F-Ce-Y9o"/>
                             <constraint firstItem="ige-pj-rcj" firstAttribute="top" secondItem="iwh-vZ-ZYG" secondAttribute="top" id="LXI-QZ-rkp"/>
                             <constraint firstItem="kw3-wS-i6q" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" constant="100" id="Nz0-Gm-7dR"/>
@@ -322,8 +332,11 @@
                             <constraint firstItem="EW5-s0-gaR" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="o3A-cw-PzQ"/>
                             <constraint firstItem="zFe-dK-Ap7" firstAttribute="top" secondItem="6J3-Qf-DOI" secondAttribute="bottom" id="ovK-mZ-hdP"/>
                             <constraint firstItem="zFe-dK-Ap7" firstAttribute="leading" secondItem="EW5-s0-gaR" secondAttribute="trailing" constant="5" id="pOC-Pc-K4j"/>
+                            <constraint firstItem="6J3-Qf-DOI" firstAttribute="top" secondItem="Hzs-zz-qaQ" secondAttribute="bottom" constant="31" id="qBP-wh-7h2"/>
                             <constraint firstItem="vCU-XS-NR1" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" constant="10" id="tT8-T7-9ay"/>
+                            <constraint firstItem="iwh-vZ-ZYG" firstAttribute="trailing" secondItem="ndX-gm-SO8" secondAttribute="trailing" constant="60" id="uc7-Hb-fZY"/>
                             <constraint firstItem="ndX-gm-SO8" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="15" id="v4e-dK-ftr"/>
+                            <constraint firstItem="Hzs-zz-qaQ" firstAttribute="top" secondItem="kw3-wS-i6q" secondAttribute="bottom" constant="20" id="xqn-Gn-k5u"/>
                             <constraint firstItem="6J3-Qf-DOI" firstAttribute="leading" secondItem="iwh-vZ-ZYG" secondAttribute="leading" id="yyf-9W-WRJ"/>
                         </constraints>
                     </view>
@@ -337,6 +350,7 @@
                     <connections>
                         <outlet property="authorText" destination="ndX-gm-SO8" id="wDi-cg-pKP"/>
                         <outlet property="categoryPicker" destination="zFe-dK-Ap7" id="oHU-jf-Ab3"/>
+                        <outlet property="deleteButton" destination="Hzs-zz-qaQ" id="M1M-uk-77t"/>
                         <outlet property="quoteImage" destination="6J3-Qf-DOI" id="kPE-Un-54y"/>
                         <outlet property="quoteText" destination="kw3-wS-i6q" id="Db8-rt-1rI"/>
                     </connections>
@@ -400,11 +414,15 @@
         <image name="Quotes" width="125" height="125"/>
         <image name="icons8-google-144" width="36" height="36"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
