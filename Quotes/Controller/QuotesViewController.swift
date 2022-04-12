@@ -43,7 +43,7 @@ class QuotesViewController:UITableViewController
                     self.tableView.reloadData()
                 }
 
-                print(self.quotesToShow)
+               // print(self.quotesToShow)
           //  case .Failure(let error):
                // print(error)
            // }
@@ -129,8 +129,8 @@ class QuotesViewController:UITableViewController
         tableView.performBatchUpdates({
 
             retriveData(category: selectedCategory!)
-            print("Count after retriving from coredata")
-            print(quotesToShow)
+           // print("Count after retriving from coredata")
+           // print(quotesToShow)
             
         }) { (_) in
             tableView.reloadData()

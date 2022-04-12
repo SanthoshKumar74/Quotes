@@ -16,7 +16,7 @@ class NewQuoteViewController:UIViewController
     var categories:[Category] = []
     let notion = NotionAPI()
     var selectedCategory: Category?
-    static var authorString = ""
+    var quoteString = ""
 
     @IBOutlet var quoteImage: UIImageView!
     @IBOutlet var quoteText: UITextView?
@@ -56,10 +56,11 @@ class NewQuoteViewController:UIViewController
     @IBAction func saveQuote(_ sender: UIButton) {
         
       let compact = categories.unique(){$0.name}
-        saveNewQuote(quote: quoteText!.text!, author: authorText.text!, category: compact[categoryPicker.selectedRow(inComponent: 0)].name!)
+      saveNewQuote(oldQuote:quoteString,newquote: quoteText!.text!, author: authorText.text!, category: compact[categoryPicker.selectedRow(inComponent: 0)].name!)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(quoteString)
         categoryPicker.delegate = self
         categoryPicker.dataSource = self
         quoteText!.clipsToBounds = true
@@ -183,6 +184,7 @@ extension NewQuoteViewController
 {
     func configure(quote:Quotes)
     {
+      quoteString = quote.quote!
         DispatchQueue.main.async {
             self.authorText.text = quote.authorCategory?.name
             self.quoteText!.text = quote.quote
@@ -202,11 +204,11 @@ extension NewQuoteViewController
 //MARK: Adding New Quote
 extension NewQuoteViewController
 {
-    func saveNewQuote(quote:String,author:String,category:String)
+  func saveNewQuote(oldQuote:String, newquote:String,author:String,category:String)
     {
         print(category)
                //notion.addPage(quote: quote, author: author, category: category)
-        notion.updateData(author: author, Quote: quote, Category: category)
+      notion.updateData(author: author, oldQuote: oldQuote, newQuote: newquote, Category: category)
         navigationController?.popViewController(animated: true)
         
         

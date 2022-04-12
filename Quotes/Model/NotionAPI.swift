@@ -90,7 +90,7 @@ class NotionAPI
                    print(error)
                }
                
-               print(Quote)
+               //print(Quote)
                
                //self.Quote =  Quote.unique(context:context, objectType: "Quote"){($0.quote)}
                //self.authors = authors.unique(context:context, objectType:"Author"){$0.name}
@@ -98,7 +98,7 @@ class NotionAPI
               
             
                
-               print(Quote)
+              // print(Quote)
                //print(authors)
                //print(categories)
                
@@ -126,7 +126,8 @@ class NotionAPI
         
     }
     
-    func updateData(author: String, Quote: String, Category: String ) {
+  func updateData(author: String,oldQuote:String, newQuote: String, Category: String ) {
+    print(oldQuote)
         
         let headers = [
           "Accept": "application/json",
@@ -140,7 +141,7 @@ class NotionAPI
           "page_size": 100,
           "filter": [
             "property": "Quote",
-            "rich_text": ["contains": Quote]
+            "rich_text": ["contains": oldQuote]
           ]
         ] as [String : Any]
         
@@ -162,20 +163,20 @@ class NotionAPI
             
                let json = try! JSON(data: safeData)
                let results = json["results"]
-               print(results)
+             //  print(results)
             
               if results != []
                {
                //print(results[0]["id"].stringValue)
                   if author == "" {
-               self.updatePage(id: results[0]["id"].stringValue, author: "", Quote: Quote, category: Category)
+               self.updatePage(id: results[0]["id"].stringValue, author: "", Quote: newQuote, category: Category)
                   }
                   else{
-                      self.updatePage(id: results[0]["id"].stringValue, author: author, Quote: Quote, category: Category)
+                      self.updatePage(id: results[0]["id"].stringValue, author: author, Quote: newQuote, category: Category)
                   }
                }else
                {
-                   self.addPage(quote: Quote, author: author, category: Category)
+                   self.addPage(quote: newQuote, author: author, category: Category)
                }
         
     }
@@ -397,7 +398,7 @@ extension NotionAPI
           } else {
             let httpResponse = response as? HTTPURLResponse
               print("Succeed")
-            print(httpResponse)
+           // print(httpResponse)
           }
         })
 
@@ -441,7 +442,7 @@ extension NotionAPI
             
                let json = try! JSON(data: safeData)
                let results = json["results"]
-               print(results)
+               //print(results)
                self.deletePage(id: results[0]["id"].stringValue)       
 }
      
