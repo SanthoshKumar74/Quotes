@@ -65,8 +65,8 @@ class NotionAPI
                print(results.count)
                for result in results
                {
-                   authors = try context.fetch(Author.fetchRequest()) as [Author]
-                   categories = try context.fetch(Category.fetchRequest()) as [Category]
+                 self.authors = try context.fetch(Author.fetchRequest()) as [Author]
+                 self.categories = try context.fetch(Category.fetchRequest()) as [Category]
                    
                    let newQuote = Quotes(context:context)
                    let newAuthor = Author(context: context)
@@ -81,9 +81,9 @@ class NotionAPI
                
                do
                {
-                   Quote = try context.fetch(Quotes.fetchRequest()) as [Quotes]
-                   authors = try context.fetch(Author.fetchRequest()) as [Author]
-                   categories = try context.fetch(Category.fetchRequest()) as [Category]
+                 self.Quote = try context.fetch(Quotes.fetchRequest()) as [Quotes]
+                 self.authors = try context.fetch(Author.fetchRequest()) as [Author]
+                 self.categories = try context.fetch(Category.fetchRequest()) as [Category]
                }
                catch
                {
