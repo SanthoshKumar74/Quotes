@@ -21,8 +21,9 @@ class QuoteCell: UITableViewCell {
     
     func configure(quote:Quotes)
     {
+      
         quoteView.text = quote.quote
         authorLabel.text = quote.authorCategory?.name
-        
+      
     }
 }

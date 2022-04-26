@@ -19,16 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           if error != nil || user == nil {
            
           } else {
-            //  let storyboard = UIStoryboard(name: "Main", bundle: nil)
-              //let  collectionView =  storyboard.instantiateViewController(withIdentifier: "CollectionViewController") as! CollectionViewController
-              self.window?.rootViewController = CategoryViewController()
+             let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let categoryVC = storyboard.instantiateViewController(withIdentifier: "CollectionViewController") as? CategoryViewController{
               print("UserSigned in")
+              self.window?.rootViewController = categoryVC
           }
-        }
+          }}
        print( NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
           return true
         
-    }
+        }
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         let handled = GIDSignIn.sharedInstance.handle(url)
         if handled{
@@ -96,4 +96,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
+
 
