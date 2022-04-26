@@ -4,15 +4,24 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>NOtion api (Playground).xcscheme</key>
+		<key>NOtion api (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>9</integer>
 		</dict>
-		<key>Quotes.xcscheme_^#shared#^_</key>
+		<key>NOtion api (Playground) 2.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>10</integer>
+		</dict>
+		<key>NOtion api (Playground).xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
